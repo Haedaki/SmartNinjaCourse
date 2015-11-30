@@ -1,0 +1,12 @@
+var limit = prompt('povej max število:');
+
+function fizzBuzz(limit){
+  for(var i = 1; i <= limit; i++){
+      var fb = '';
+      if(i%3 == 0) fb += 'Fizz';
+      if(i%5 == 0) fb += 'Buzz';
+      console.log(fb ? fb : i);
+  }
+};
+
+fizzBuzz(limit);

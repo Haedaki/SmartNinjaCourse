@@ -1,0 +1,32 @@
+var computerNumber = Math.floor(Math.random() * 100) + 1;
+var numberOfGuesses = 5;
+
+function guessPrompt(){
+  var guess = prompt('Guess the number: ');
+  return guess;
+}
+
+function guessCheck(){
+  user_guess = guessPrompt();
+  if(user_guess == computerNumber){
+    numberOfGuesses--;
+    alert('You are correct!')
+  } else if(user_guess > computerNumber && numberOfGuesses > 1){
+    console.log('Your number is too big.')
+    numberOfGuesses--;
+    guessCheck();
+  } else if(user_guess < computerNumber && numberOfGuesses > 1){
+    console.log('Your number is too small.')
+    numberOfGuesses--;
+    guessCheck();
+  } else if(numberOfGuesses == 1) {
+    if(user_guess < computerNumber){
+      console.log('Your number is too small and you ran out of guesses.')
+    }else{
+      console.log('Your number is too big and you ran out of guesses.')      
+    }
+  }
+}
+
+// console.log(computerNumber);
+guessCheck();
