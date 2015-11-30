@@ -7,11 +7,10 @@
   <script>    
     angular.module('app', []);
     angular.module('app')
-      .controller('MlbController', function($scope){
-        $scope.title = "MLB";
-          $scope.calculateSavings = function(i){
-            // (znesek * (1 + obrestnamera/100)) * št.mesecev
-            // $scope.result = ($scope.monthly_input * (1 + $scope.interest_rate/100) * $scope.months);
+      .controller('MlbSavings', function($scope){
+
+        $scope.title = "Savings";
+        $scope.calculateSavings = function(i){
             var mi = $scope.monthly_input;
             var months = $scope.months;
             var ir = $scope.interest_rate;
@@ -20,29 +19,57 @@
         }
     });
 
+    angular.module('app')
+      .controller('MlbPayouts', function($scope){
+        $scope.title = "Payouts";
+        $scope.calculateSavings = function(i){
+            var mi = $scope.monthly_output;
+            var months = $scope.months;
+            var calculation = (mi * months);
+            $scope.result = calculation;
+        }
+    });
+
   </script>
 </head>
 <body ng-app="app">
-<div ng-controller="MlbController" class="container"> 
+<div ng-controller="MlbSavings" class="container"> 
     <div class="col-sm-12"> 
-      <h1>{{ title }}</h1>
-      <h3>Varčevanje</h3>
+        <h1>MLB</h1>
+        <h3>{{ title }}</h3>
     </div>
     <div class="col-sm-3">
-      <input type="text" class="form-control" ng-model="monthly_input" placeholder="mesečno vplačilo" />
+        <input type="text" class="form-control" ng-model="monthly_input" placeholder="mesečno vplačilo" />
     </div>
     <div class="col-sm-3">
-      <input type="text" class="form-control" ng-model="months" placeholder="št mesecev" />
+        <input type="text" class="form-control" ng-model="months" placeholder="št mesecev" />
     </div>  
     <div class="col-sm-3">
-      <input type="text" class="form-control" ng-model="interest_rate" placeholder="mesečna obrestna mera" />
+        <input type="text" class="form-control" ng-model="interest_rate" placeholder="mesečna obrestna mera" />
     </div>     
     <button class="btn btn-primary" ng-click="calculateSavings()">Izračunaj</button><br clear="all">
     <div class="col-sm-6"> 
-      <h4 class=" bg-success" style="padding:15px;margin-top:10px;">
-        {{ result }}
-      </h4> 
+        <h4 class=" bg-success" style="padding:15px;margin-top:10px;">
+          {{ result }}
+        </h4> 
     </div>
-  </div>
+</div>
+<div ng-controller="MlbPayouts" class="container"> 
+    <div class="col-sm-12"> 
+        <h3>{{ title }}</h3>
+    </div>
+    <div class="col-sm-3">
+        <input type="text" class="form-control" ng-model="monthly_output" placeholder="mesečno vplačilo" />
+    </div>
+    <div class="col-sm-3">
+        <input type="text" class="form-control" ng-model="months" placeholder="št mesecev" />
+    </div>     
+    <button class="btn btn-primary" ng-click="calculateSavings()">Izračunaj</button><br clear="all">
+    <div class="col-sm-6"> 
+        <h4 class=" bg-success" style="padding:15px;margin-top:10px;">
+          {{ result }}
+        </h4> 
+    </div>
+</div>
 </body>
 </html>

@@ -19,7 +19,7 @@ angular.module('app')
 <body ng-app="app">
 <div ng-controller="FrelloController" class="container well" ng-init="tasks = []">
   <h1>Frello</h1>
-  <input type="text" ng-minlength="1" required ng-model="task" class="form-control" /><br>
+  <input type="text" ng-minlength="3" required ng-model="task" class="form-control" /><br>
   <button class="btn btn-primary" ng-click="tasks.push(task)">Add task</button><br><br>
     <div 
       ng-repeat="task in tasks track by $index" 
