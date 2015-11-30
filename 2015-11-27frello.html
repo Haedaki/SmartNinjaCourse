@@ -1,13 +1,8 @@
 <html>
-
 <head>
-
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-
 <script>
 
 angular.module('app', []);
@@ -23,95 +18,20 @@ angular.module('app')
 <body ng-app="app">
 <div ng-controller="FrelloController" class="container well" ng-init="tasks = []">
   <h1>Frello</h1>
-  <input type="text" ng-model="task" />    
-  <button class="btn btn-primary" ng-click="tasks.push(task)">Add task</button>
-  <ul>
-    <li ng-repeat="task in tasks track by $index">{{ task }} <button ng-click="remove($index)">X</button><input type="checkbox" /></li>
-  </ul>
+  <input type="text" ng-minlength="1" required ng-model="task" class="form-control" /><br>
+  <button class="btn btn-primary" ng-click="tasks.push(task)">Add task</button><br><br>
+    <div 
+      ng-repeat="task in tasks track by $index" 
+      ng-class="{ 'bg-info': !taskdone[$index], 
+                 'bg-success': taskdone[$index] }" 
+                 style="padding:15px; margin-bottom:20px;"
+    >
+      <p>
+        <label style="margin: 0 10px -3px 0;"><input style=" background:#ffffff;" type="checkbox" ng-model="taskdone[$index]" class="close" /></label>
+        {{ task }} 
+        <button type="button" class="close" aria-label="Close" ng-click="remove($index)"><span aria-hidden="true">&times;</span></button>
+      </p>
+  </div>
 </div>
 </body>
-
-// opravljeno
-// edit taska
-// samo opravljeni, samo neopravljeni
-  <!--  Expression
-  <div class="container well">
-    <h2>  {{ 10 + 10 }}</h2>
-    <h2>  {{ 10 * 10 }}</h2>
-    <h2> {{ 'miha ' + 'smartninja' }}</h2>
-  </div>
--->
-<!--  
-  <div class="container well">
-    <div class="form-group" ng-init="data = {name: 'Miha'}">
-        <input type="text" class="form-control" ng-model="data.name" /> 
-      
-      <p>{{ data.name }}</p>
-      
-      
-      <input type="checkbox" class="form-control" ng-model="visible" />
-    </div>
-    
-     <p>{{ data }}</p>
-    
-    <p ng-show="visible">Visible: {{ visible }}</p>
-    <p ng-hide="visible">Hidden: {{ !visible }}</p>
-    
-    <p ng-if="visible">ng-if {{visible}}</p>
-
-  </div>
-
--->
-  
-  <!-- <div class="container well" ng-init="persons = ['Miha', 'Tone', 'Jože']">
-        
-    <p>{{ persons }}</p>
-    
-    <ul>
-      <li ng-repeat="person in persons">{{ person }}</li>
-    </ul>
-    
-  
-  </div>
-<div class="container well">
-    <input type="text" ng-model="class" class="form-control"/>
-     
-    <input type="checkbox" ng-model="enable" class="form-control"/>
-    
-    <p>Class: {{ class }}</p>
-    <p>Enable: {{ enable }}</p>
-
-    
-     <p class="{{ class }}"> Glej me rdečega!</p> 
-    
-    <p ng-class="{ 'text-danger': enable, 
-                 'text-success': !enable }">Tudi jaz sem rdeč!</p>
-   
-  </div>
-
- -->
-  
-  <!-- 
-  <div class="container well" ng-init="persons = ['Miha']">
-     <p>{{ persons }}</p> 
-     
-    <input type="text" ng-model="person" />
-    
-    <button class="btn btn-primary" ng-click="persons.push(person)">Dodaj osebo</button>
-  
-  </div>
-  
-  
-  
-    <div class="container well" ng-controller="DemoController">
-      <h1>{{ title }}</h1>
-      
-      <input type="text" ng-model="data" class="form-control" />
-      
-      <button class="btn btn-primary" ng-click="changeTo(data)">Spremeni title v nekaj drugega</button>
-    </div>  
-  </div>
-  
-   -->
-
 </html>
