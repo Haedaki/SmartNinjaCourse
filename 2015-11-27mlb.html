@@ -1,39 +1,53 @@
 <html>
-
 <head>
-
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script>    
+    angular.module('app', []);
+    angular.module('app')
+      .controller('MlbController', function($scope){
+        $scope.title = "MLB";
+          $scope.calculateSavings = function(i){
+            // (znesek * (1 + obrestnamera/100)) * št.mesecev
+            // $scope.result = ($scope.monthly_input * (1 + $scope.interest_rate/100) * $scope.months);
+            var mi = $scope.monthly_input;
+            var months = $scope.months;
+            var ir = $scope.interest_rate;
+            var calculation = (mi * (1 + ir / 100)) * months;
+            $scope.result = calculation;
+        }
+    });
 
-<script>
-
-angular.module('app', []);
-angular.module('app')
-  .controller('FrelloController', function($scope){
-    $scope.remove = function(i){
-      $scope.tasks.splice(i, 1);
-    }
-});
-
-</script>
+  </script>
 </head>
 <body ng-app="app">
-<div ng-controller="FrelloController" class="container well" ng-init="tasks = []">
-  <h1>Frello</h1>
-  <input type="text" ng-model="task" />    
+<div ng-controller="MlbController" class="container">
+  <h1>{{ title }}</h1>
+  <div class="well">
+    <div class="col-sm-12">
+      <h3>Varčevanje</h3>
+    </div>
+    <div class="col-sm-3">
+      <input type="text" class="form-control" ng-model="monthly_input" placeholder="mesečno vplačilo" />
+    </div>
+    <div class="col-sm-3">
+      <input type="text" class="form-control" ng-model="months" placeholder="št mesecev" />
+    </div>  
+    <div class="col-sm-3">
+      <input type="text" class="form-control" ng-model="interest_rate" placeholder="mesečna obrestna mera" />
+    </div>     
+    <button class="btn btn-primary" ng-click="calculateSavings()">Izračunaj</button>
+    <div> {{ result }} </div>
+<!--   <input type="text" ng-model="task" />    
   <button class="btn btn-primary" ng-click="tasks.push(task)">Add task</button>
   <ul>
     <li ng-repeat="task in tasks track by $index">{{ task }} <button ng-click="remove($index)">X</button><input type="checkbox" /></li>
-  </ul>
+  </ul> -->
+  </div>
 </div>
 </body>
 
-// opravljeno
-// edit taska
-// samo opravljeni, samo neopravljeni
   <!--  Expression
   <div class="container well">
     <h2>  {{ 10 + 10 }}</h2>
