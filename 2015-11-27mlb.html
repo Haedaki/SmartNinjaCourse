@@ -7,67 +7,60 @@
   <script>    
     angular.module('app', []);
     angular.module('app')
-      .controller('MlbSavings', function($scope){
+      .controller('Mlb', function($scope){
 
-        $scope.title = "Savings";
+        $scope.title = "MLB";
         $scope.calculateSavings = function(i){
             var mi = $scope.monthly_input;
-            var months = $scope.months;
+            var smonths = $scope.smonths;
             var ir = $scope.interest_rate;
-            var calculation = (mi * (1 + ir / 100)) * months;
-            $scope.result = calculation;
+            var scalculation = (mi * (1 + ir / 100)) * smonths;
+            $scope.sresult = scalculation;
         }
-    });
-
-    angular.module('app')
-      .controller('MlbPayouts', function($scope){
-        $scope.title = "Payouts";
-        $scope.calculateSavings = function(i){
+        $scope.calculatePayout = function(i){
             var mi = $scope.monthly_output;
-            var months = $scope.months;
-            var calculation = (mi * months);
-            $scope.result = calculation;
+            var pmonths = $scope.pmonths;
+            var pcalculation = (mi * pmonths);
+            $scope.presult = pcalculation;
         }
     });
-
   </script>
 </head>
 <body ng-app="app">
-<div ng-controller="MlbSavings" class="container"> 
+<div ng-controller="Mlb" class="container"> 
     <div class="col-sm-12"> 
-        <h1>MLB</h1>
-        <h3>{{ title }}</h3>
+        <h1>{{title}}</h1>
+        <h3>Varčevanje</h3>
     </div>
     <div class="col-sm-3">
-        <input type="text" class="form-control" ng-model="monthly_input" placeholder="mesečno vplačilo" />
+        <input type="number" class="form-control" ng-model="monthly_input" placeholder="mesečno vplačilo" />
     </div>
     <div class="col-sm-3">
-        <input type="text" class="form-control" ng-model="months" placeholder="št mesecev" />
+        <input type="number" class="form-control" ng-model="smonths" placeholder="št mesecev" />
     </div>  
     <div class="col-sm-3">
-        <input type="text" class="form-control" ng-model="interest_rate" placeholder="mesečna obrestna mera" />
+        <input type="number" class="form-control" ng-model="interest_rate" placeholder="mesečna obrestna mera" />
     </div>     
     <button class="btn btn-primary" ng-click="calculateSavings()">Izračunaj</button><br clear="all">
     <div class="col-sm-6"> 
         <h4 class=" bg-success" style="padding:15px;margin-top:10px;">
-          {{ result }}
+          {{ sresult }}
         </h4> 
     </div>
-</div>
-<div ng-controller="MlbPayouts" class="container"> 
+    <br clear="all">
     <div class="col-sm-12"> 
-        <h3>{{ title }}</h3>
+        <h3>Izplačila</h3>
     </div>
     <div class="col-sm-3">
-        <input type="text" class="form-control" ng-model="monthly_output" placeholder="mesečno vplačilo" />
+        <input type="number" class="form-control" ng-model="monthly_output" placeholder="mesečno vplačilo" />
     </div>
     <div class="col-sm-3">
-        <input type="text" class="form-control" ng-model="months" placeholder="št mesecev" />
+        <input type="number" class="form-control" ng-model="pmonths" placeholder="št mesecev" />
     </div>     
-    <button class="btn btn-primary" ng-click="calculateSavings()">Izračunaj</button><br clear="all">
+    <button class="btn btn-primary" ng-click="calculatePayout()">Izračunaj</button><br clear="all">
     <div class="col-sm-6"> 
         <h4 class=" bg-success" style="padding:15px;margin-top:10px;">
-          {{ result }}
+          {{ presult }}
         </h4> 
     </div>
 </div>
