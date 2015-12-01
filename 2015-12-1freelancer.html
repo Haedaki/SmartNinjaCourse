@@ -1,0 +1,130 @@
+<html>
+<head>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script>
+  angular.module('app', []);
+  angular.module('app')
+    .controller('Enquiry', function($scope){
+      $scope.products = [{name: 'Angular form', id: 1},{name:'Web site', id: 2},{name: 'Consultations', id: 3}];
+      function saveTextarea = {}
+
+      // $scope.date = new Date();                                          
+      // $scope.array = ['Miha', 'Jože'];    
+      /* $scope.options = ['Miha', 'Jože', 'Marko'];    
+      $scope.objects = [{name: 'Miha'}, {name:'Jože'}];*/    
+      /*  $scope.$watch('watch', function(newValue, oldValue){
+      // console.log('Sprememba: ' + newValue);    
+      });*/    
+  });
+</script>
+
+</head>
+
+<body ng-app="app">
+
+  <div class="container" ng-controller="Enquiry">
+    <div class="row">
+      <div class="col-xs-12 well">
+        <form name="formEnquiry" novalidate>
+          <select class="form-control" ng-options="product.name for product in products" ng-model="selectedProduct" ng-required="true"></select><br>
+           <input placeholder="your email" name="email" type="email" ng-model="email" class="form-control" ng-required="true" /><br>
+          <input placeholder="your name" name="name" type="text" ng-model="name" class="form-control" ng-required="true" ng-minlenght = "2" /><br>
+          <textarea placeholder="tell me your question" class="form-control" ng-model="question" name="question" ng-show="selectedProduct.id == 3" ng-minlenght = "3" ng-required="true"></textarea><br><br>
+          {{ question }}<br>
+          {{ formEnquiry.$valid }}<br>
+          <button class="btn btn-primary disabled" ng-class="{disabled:!formEnquiry.$valid}">Send</button>
+        </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!--   <form name="formTodo"> 
+          <!-- <input name="todo" type="text" ng-model="todo" /> -->
+
+        <!--     <select ng-options="item for item in options" ng-model="selectedItem"></select>-->
+
+        <!--    <select ng-options="item.name for item in objects" ng-model="selectedItem"></select>
+          
+          <p>{{ selectedItem }}</p> 
+          
+          <input type="text" ng-model="watch" />
+          
+          <p>{{ watch }}</p>
+          
+       </form>
+        -->
+
+
+        <!-- <form name="validationForm" novalidate> -->
+          <!--    <input type="text" name="data" 
+                 ng-model="data"
+                 class="form-control" 
+                 ng-required="true"
+                 ng-minlength="3"
+                 ng-maxlength="6"
+                 ng-trim="true"
+                 ng-pattern="/^\d+$/"/>-->
+
+<!--           <input type="email" name="email" ng-model="email" class="form-control" ng-required="true" ng-minlength="5" />
+
+          <p class="text-danger" ng-show="validationForm.email.$error.email && validationForm.email.$touched">Email polje je zahtevano.</p>
+
+
+          <p>Pristine: {{ validationForm.email.$pristine }}</p>
+          <p>Dirty: {{ validationForm.email.$dirty }}</p>
+          <p>Touched: {{ validationForm.email.$touched }}</p>
+
+
+          <!--    <p>data: {{ data }}</p>          <p>email: {{ email }}</p>
+
+          <p>Email napake: {{ validationForm.email.$error }}</p>
+          <p>Je email valid: {{ validationForm.email.$valid }}</p>
+
+
+          <p>Form valid: {{ validationForm.$valid }}</p>
+-->
+      <!--     
+          <input type="number" ng-model="currency" />
+
+           <p>{{ currency | currency: '$': 2}}</p>
+          <p>{{ currency }}</p>
+          
+          <p>Datum: {{ date | date:'MMM d, y'}}</p>
+        </form>
+        
+        <input type="text" ng-model="query" />
+        
+        <ul>
+          <li ng-repeat="person in array | filter:query">{{ person }}</li>
+        </ul>
+ -->
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
