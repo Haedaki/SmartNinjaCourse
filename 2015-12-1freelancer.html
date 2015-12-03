@@ -7,124 +7,71 @@
   angular.module('app', []);
   angular.module('app')
     .controller('Enquiry', function($scope){
+      $scope.title = 'Freelancing';
       $scope.products = [{name: 'Angular form', id: 1},{name:'Web site', id: 2},{name: 'Consultations', id: 3}];
-      // function saveTextarea = {}
+      $scope.emailWarning = function(){
+        if($scope.formEnquiry.email.$touched && $scope.formEnquiry.email.$error.email || $scope.formEnquiry.email.$touched && $scope.formEnquiry.email.$error.required){
+          return true
+        } else {
+          return false
+        }
+      }
+      $scope.formSent = function(){
+        if($scope.formEnquiry.$valid) {
+          alert("Your form has been sent!");
+        }
+      }
 
-      // $scope.date = new Date();                                          
-      // $scope.array = ['Miha', 'Jože'];    
-      /* $scope.options = ['Miha', 'Jože', 'Marko'];    
-      $scope.objects = [{name: 'Miha'}, {name:'Jože'}];*/    
-      /*  $scope.$watch('watch', function(newValue, oldValue){
-      // console.log('Sprememba: ' + newValue);    
-      });*/    
   });
 </script>
-
 </head>
-
 <body ng-app="app">
-
-  <div class="container" ng-controller="Enquiry">
+<div class="container" ng-controller="Enquiry">
     <div class="row">
       <div class="col-xs-12 well">
-        <form name="formEnquiry" novalidate>
-          <select class="form-control" ng-options="product.name for product in products" ng-model="selectedProduct" ng-required="true"></select><br>
-           <input placeholder="your email" name="email" type="email" ng-model="email" class="form-control" ng-required="true" /><br>
-          <input placeholder="your name" name="name" type="text" ng-model="name" class="form-control" ng-required="true" ng-minlenght = "2" /><br>
-          <textarea placeholder="tell me your question" class="form-control" ng-model="question" name="question" ng-show="selectedProduct.id == 3" ng-minlenght = "3" ng-required="true"></textarea><br><br>
-          {{ question }}<br>
-          {{ formEnquiry.$valid }}<br>         
-          {{ formEnquiry }}<br>
-          <button class="btn btn-primary disabled" ng-class="{disabled:!formEnquiry.$valid}">Send</button>
+        <h1>{{ title }}</h1>
+        <form name="formEnquiry" novalidate> 
+
+          <select class="form-control" ng-options="product.name for product in products" ng-model="form.selectedProduct" ng-required="true" name="product"></select><br> 
+              <p class="warning" ng-show="formEnquiry.product.$error.required && formEnquiry.product.$touched">Please select a service</p>          
+            
+          <div ng-class="{'has-warning': emailWarning()}">
+              <input placeholder="your email" name="email" type="email" ng-model="form.email" class="form-control" ng-required="true" /><br> 
+              <p class="has-warning" ng-show="formEnquiry.email.$touched && formEnquiry.email.$error.required">Email is required.</p>
+              <p class="has-warning" ng-show="formEnquiry.email.$touched && formEnquiry.email.$error.email"> Incorrect email format.</p>
+          </div>
+          
+          <div>
+            <input placeholder="your name" class="form-control" ng-trim="true" ng-model="form.name" name="name" type="text" ng-required="true" ng-minlength="2" /><br>            
+            <p class="has-warning" ng-show="formEnquiry.name.$touched && formEnquiry.name.$error.required">The name is required.</p>
+            <p class="has-warning" ng-show="formEnquiry.name.$touched && formEnquiry.name.$error.minlength">The name is too short.</p>
+          </div>
+
+          <div ng-if="form.selectedProduct.id == 3">
+              <input placeholder="your phone" class="form-control" ng-trim="true" ng-model="form.phone" name="phone" type="text" ng-required="true" ng-minlength="6" ng-pattern="/^[2-9]\d{2}[2-9]\d{2}\d{4}$/" /><br>
+              <p class="has-warning" ng-show="formEnquiry.phone.$touched && formEnquiry.phone.$error.required">The phone is required.</p>
+              <p class="has-warning" ng-show="formEnquiry.phone.$touched && formEnquiry.phone.$error.pattern">Incorrect phone format.</p>  
+          </div>
+          
+          <textarea placeholder="ask me a question" class="form-control" ng-trim="true" ng-model="form.question" name="question" ng-minlenght="3"></textarea><br>
+          
+          <button class="btn btn-primary disabled" ng-class="{disabled:!formEnquiry.$valid}" ng-click="formSent()">Send</button>      
         </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <!--   <form name="formTodo"> 
-          <!-- <input name="todo" type="text" ng-model="todo" /> -->
-
-        <!--     <select ng-options="item for item in options" ng-model="selectedItem"></select>-->
-
-        <!--    <select ng-options="item.name for item in objects" ng-model="selectedItem"></select>
-          
-          <p>{{ selectedItem }}</p> 
-          
-          <input type="text" ng-model="watch" />
-          
-          <p>{{ watch }}</p>
-          
-       </form>
-        -->
-
-
-        <!-- <form name="validationForm" novalidate> -->
-          <!--    <input type="text" name="data" 
-                 ng-model="data"
-                 class="form-control" 
-                 ng-required="true"
-                 ng-minlength="3"
-                 ng-maxlength="6"
-                 ng-trim="true"
-                 ng-pattern="/^\d+$/"/>-->
-
-<!--           <input type="email" name="email" ng-model="email" class="form-control" ng-required="true" ng-minlength="5" />
-
-          <p class="text-danger" ng-show="validationForm.email.$error.email && validationForm.email.$touched">Email polje je zahtevano.</p>
-
-
-          <p>Pristine: {{ validationForm.email.$pristine }}</p>
-          <p>Dirty: {{ validationForm.email.$dirty }}</p>
-          <p>Touched: {{ validationForm.email.$touched }}</p>
-
-
-          <!--    <p>data: {{ data }}</p>          <p>email: {{ email }}</p>
-
-          <p>Email napake: {{ validationForm.email.$error }}</p>
-          <p>Je email valid: {{ validationForm.email.$valid }}</p>
-
-
-          <p>Form valid: {{ validationForm.$valid }}</p>
--->
-      <!--     
-          <input type="number" ng-model="currency" />
-
-           <p>{{ currency | currency: '$': 2}}</p>
-          <p>{{ currency }}</p>
-          
-          <p>Datum: {{ date | date:'MMM d, y'}}</p>
-        </form>
-        
-        <input type="text" ng-model="query" />
-        
-        <ul>
-          <li ng-repeat="person in array | filter:query">{{ person }}</li>
-        </ul>
- -->
-      </div>
+        </div>
     </div>
-  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
 
