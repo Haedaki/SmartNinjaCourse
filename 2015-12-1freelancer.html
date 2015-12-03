@@ -28,35 +28,35 @@
 <body ng-app="app">
 <div class="container" ng-controller="Enquiry">
     <div class="row">
-      <div class="col-xs-12 well">
-        <h1>{{ title }}</h1>
-        <form name="formEnquiry" novalidate> 
+        <div class="col-xs-12 well">
+            <h1>{{ title }}</h1>
+            <form name="formEnquiry" novalidate> 
 
-          <select class="form-control" ng-options="product.name for product in products" ng-model="form.selectedProduct" ng-required="true" name="product"></select><br> 
-              <p class="warning" ng-show="formEnquiry.product.$error.required && formEnquiry.product.$touched">Please select a service</p>          
-            
-          <div ng-class="{'has-warning': emailWarning()}">
-              <input placeholder="your email" name="email" type="email" ng-model="form.email" class="form-control" ng-required="true" /><br> 
-              <p class="has-warning" ng-show="formEnquiry.email.$touched && formEnquiry.email.$error.required">Email is required.</p>
-              <p class="has-warning" ng-show="formEnquiry.email.$touched && formEnquiry.email.$error.email"> Incorrect email format.</p>
-          </div>
-          
-          <div>
-            <input placeholder="your name" class="form-control" ng-trim="true" ng-model="form.name" name="name" type="text" ng-required="true" ng-minlength="2" /><br>            
-            <p class="has-warning" ng-show="formEnquiry.name.$touched && formEnquiry.name.$error.required">The name is required.</p>
-            <p class="has-warning" ng-show="formEnquiry.name.$touched && formEnquiry.name.$error.minlength">The name is too short.</p>
-          </div>
+                <select class="form-control" ng-options="product.name for product in products" ng-model="form.selectedProduct" ng-required="true" name="product"></select><br> 
+                <p class="warning" ng-show="formEnquiry.product.$error.required && formEnquiry.product.$touched">Please select a service</p>          
+              
+                <div ng-class="{'has-warning': emailWarning()}">
+                    <input placeholder="your email" name="email" type="email" ng-model="form.email" class="form-control" ng-required="true" /><br> 
+                    <p class="has-warning" ng-show="formEnquiry.email.$touched && formEnquiry.email.$error.required">Email is required.</p>
+                    <p class="has-warning" ng-show="formEnquiry.email.$touched && formEnquiry.email.$error.email"> Incorrect email format.</p>
+                </div>
+                
+                <div>
+                  <input placeholder="your name" class="form-control" ng-trim="true" ng-model="form.name" name="name" type="text" ng-required="true" ng-minlength="2" /><br>            
+                  <p class="has-warning" ng-show="formEnquiry.name.$touched && formEnquiry.name.$error.required">The name is required.</p>
+                  <p class="has-warning" ng-show="formEnquiry.name.$touched && formEnquiry.name.$error.minlength">The name is too short.</p>
+                </div>
 
-          <div ng-if="form.selectedProduct.id == 3">
-              <input placeholder="your phone" class="form-control" ng-trim="true" ng-model="form.phone" name="phone" type="text" ng-required="true" ng-minlength="6" ng-pattern="/^[2-9]\d{2}[2-9]\d{2}\d{4}$/" /><br>
-              <p class="has-warning" ng-show="formEnquiry.phone.$touched && formEnquiry.phone.$error.required">The phone is required.</p>
-              <p class="has-warning" ng-show="formEnquiry.phone.$touched && formEnquiry.phone.$error.pattern">Incorrect phone format.</p>  
-          </div>
-          
-          <textarea placeholder="ask me a question" class="form-control" ng-trim="true" ng-model="form.question" name="question" ng-minlenght="3"></textarea><br>
-          
-          <button class="btn btn-primary disabled" ng-class="{disabled:!formEnquiry.$valid}" ng-click="formSent()">Send</button>      
-        </form>
+                <div ng-if="form.selectedProduct.id == 3">
+                    <input placeholder="your phone" class="form-control" ng-trim="true" ng-model="form.phone" name="phone" type="text" ng-required="true" ng-minlength="6" ng-pattern="/^[2-9]\d{2}[2-9]\d{2}\d{4}$/" /><br>
+                    <p class="has-warning" ng-show="formEnquiry.phone.$touched && formEnquiry.phone.$error.required">The phone is required.</p>
+                    <p class="has-warning" ng-show="formEnquiry.phone.$touched && formEnquiry.phone.$error.pattern">Incorrect phone format.</p>  
+                </div>
+                
+                <textarea placeholder="ask me a question" class="form-control" ng-trim="true" ng-model="form.question" name="question" ng-minlenght="3"></textarea><br>
+                
+                <button class="btn btn-primary disabled" ng-class="{disabled:!formEnquiry.$valid}" ng-click="formSent()">Send</button>      
+            </form>
         </div>
     </div>
 </div>
