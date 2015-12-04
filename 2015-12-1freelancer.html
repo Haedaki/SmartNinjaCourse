@@ -48,9 +48,9 @@
                 </div>
 
                 <div ng-if="form.selectedProduct.id == 3">
-                    <input placeholder="your phone" class="form-control" ng-trim="true" ng-model="form.phone" name="phone" type="text" ng-required="true" ng-minlength="6" ng-pattern="/^[2-9]\d{2}[2-9]\d{2}\d{4}$/" /><br>
+                    <input placeholder="your phone" class="form-control" ng-trim="true" ng-model="form.phone" name="phone" type="text" ng-required="true" ng-minlength="6" ng-pattern="/^\d{9}$/" /><br>
                     <p class="has-warning" ng-show="formEnquiry.phone.$touched && formEnquiry.phone.$error.required">The phone is required.</p>
-                    <p class="has-warning" ng-show="formEnquiry.phone.$touched && formEnquiry.phone.$error.pattern">Incorrect phone format.</p>  
+                    <p class="has-warning" ng-show="formEnquiry.phone.$touched && formEnquiry.phone.$error.pattern">The phone field excepts only numbers.</p>  
                 </div>
                 
                 <textarea placeholder="ask me a question" class="form-control" ng-trim="true" ng-model="form.question" name="question" ng-minlenght="3"></textarea><br>
