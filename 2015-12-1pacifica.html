@@ -1,0 +1,92 @@
+<html>
+<head>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+  	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  	<script>
+  		angular.module('aero', []);
+  		angular.module('aero')
+  			.controller('Pacifica', function($scope){
+  				$scope.title = 'Pacifica Airlines';
+  				$scope.form = {};
+  				console.log($scope.form);
+  				$scope.airports = [
+  					{id: 1, city: 'Ljubljana', price: 100, add: 0, type: 'dep'},
+  					{id: 2, city: 'Maribor', price: 200, add: 0, type: 'dep'},
+  					{id: 3, city: 'Gradec', price: 300, add: 0, type: 'dep'},
+  					{id: 4, city: 'Heathrow', price: 0, add: 100, type: 'ret'},
+  					{id: 5, city: 'Gatwick', price: 0, add: 200, type: 'ret'},
+  				];
+
+  				$scope.formSent = function(){
+			        if($scope.formPacifica.$valid) {
+			          	alert("Your reservation has been made!");
+			    	}
+			    }
+  				// var todaydeparture = function(){
+  				// 	var date = new Date();
+  				// 	var today = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
+  				// 	return today;
+  				// }
+  			});
+  	</script>
+</head>
+<body ng-app="aero">
+	<div class="container" ng-controller="Pacifica">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="col-xs-12">
+					<h1>{{ title }}</h1>
+				</div>
+				<form name="formPacifica" novalidate>
+					
+					<div class="col-xs-6">
+						Departure date<br>
+						<input ng-required="true" class="form-control" type="date" name="departure" ng-model="form.departure">
+						<p class="has-warning" ng-show="formPacifica.departure.$touched && formPacifica.departure.$error.required">The departure date is required.</p>	
+						<p class="has-warning" ng-show="formPacifica.departure.$touched && formPacifica.departure.$error.date">Incorrect date format.</p>	
+					</div>
+					<div class="col-xs-6">
+						Return date<br>
+						<input ng-required="true" class="form-control" type="date" name="arrival" ng-model="form.arrival" >
+						<p class="has-warning" ng-show="formPacifica.arrival.$touched && formPacifica.arrival.$error.required">The return date is required.</p>	
+						<p class="has-warning" ng-show="formPacifica.arrival.$touched && formPacifica.arrival.$error.date">Incorrect date format.</p>	
+					</div>
+					<div  class="col-xs-12">&nbsp;</div>
+					<div  class="col-xs-6">
+						From
+						<select class="form-control" ng-options="airport.city for airport in airports | filter:{type:'dep'}" ng-model="form.depairport" ng-required="true" name="depairport"></select><br> 
+	                	<p class="warning" ng-show="formPacifica.depairport.$error.required && formPacifica.depairport.$touched">Please select an airport</p> 
+	                </div>
+					<div  class="col-xs-6">
+						To
+						<select class="form-control" ng-options="airport.city for airport in airports | filter:{type:'ret'}" ng-model="form.retairport" ng-required="true" name="retairport"></select><br> 
+	                	<p class="warning" ng-show="formPacifica.retairport.$error.required && formPacifica.retairport.$touched">Please select an airport</p> 
+	                </div> 
+					<div  class="col-xs-12">Price: {{ (formPacifica.depairport.$viewValue.price + formPacifica.retairport.$viewValue.add) | currency:" €":2}}</div>
+					<div  class="col-xs-12">&nbsp;</div>
+					<div  class="col-xs-6">
+						Email *<br>
+	                    <input placeholder="your email" name="email" type="email" ng-model="form.email" class="form-control" ng-required="true" /><br> 
+	                    <p class="has-warning" ng-show="formPacifica.email.$touched && formPacifica.email.$error.required">Email is required.</p>
+                    	<p class="has-warning" ng-show="formPacifica.email.$touched && formPacifica.email.$error.email"> Incorrect email format.</p>
+	                </div><br clear="all">
+	                <div class="col-xs-6">
+						Name<br>
+						<input class="form-control" type="text" name="name" ng-model="form.name" />
+												
+					</div>
+					<div class="col-xs-6">
+						Surname<br>
+						<input class="form-control" type="text" name="surname" ng-model="form.surname" >				
+					</div>
+					<div  class="col-xs-12">&nbsp;</div>
+					<div class="col-xs-6">
+						<button class="btn btn-primary disabled" ng-class="{disabled:!formPacifica.$valid}" ng-click="formSent()">Send</button> 
+					</div>    
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
