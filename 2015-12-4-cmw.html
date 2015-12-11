@@ -1,0 +1,81 @@
+<html>
+<head>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script>
+angular.module('app', []);
+
+angular.module('app')
+  .controller('CMWController', function($scope, $q, $http){
+  
+  var storedCars = [];
+  var storedTimeslots = [];  
+  var storedOrder = {};
+
+  $http.get('http://smartninja.betoo.si/api/CMW/cars').then(function(cars){
+    storedCars = cars.data;
+    return $http.get('http://smartninja.betoo.si/api/CMW/timeslots').then(function(timeslots){
+      storedTimeslots = timeslots.data;
+      storedTimeslots.forEach(function(timeslot){        
+          for(var i=0; i<storedCars.length; i++){
+            if(storedCars[i].id == timeslot.carId){
+              timeslot.linkedCar = storedCars[i];
+            }
+          }
+      });
+      $scope.timeslots = storedTimeslots;
+    });
+  }); 
+
+  $scope.bookTimeslot = function(){
+    var sendOrder = {
+      timeslotId: $scope.storedOrder.timeslotId.id,
+      email: $scope.storedOrder.email
+    }
+    $http.post('http://smartninja.betoo.si/api/CMW/reservations', sendOrder)
+    .then(function(response){
+      alert('Thank you for booking!');
+    }, function(response){
+      alert('Something went wrong:' + response.message);
+    });
+  }; 
+
+
+});
+</script>
+</head>
+<body ng-app="app">
+  <div class="container" ng-controller="CMWController">
+    <div class="row">
+      <div class="col-xs-12 well">  
+        <form name="order" novalidate>
+        <select 
+          name="dateTime" 
+          class="form-control" 
+          ng-options="times.date+' at '+times.time for times in timeslots | filter:{reserved:false} | orderBy : ['date','time'] track by times.id" 
+          ng-model="storedOrder.timeslotId"></select> <br> 
+        <input 
+          placeholder="your email" 
+          name="email" 
+          type="email" 
+          ng-model="storedOrder.email" 
+          class="form-control" 
+          ng-required="true" /><br> 
+          <p class="has-warning" ng-show="order.email.$touched && order.email.$error.required">Email is required.</p>
+          <p class="has-warning" ng-show="order.email.$touched && order.email.$error.email"> Incorrect email format.</p>
+        </form>
+        <div 
+          class="well" 
+          ng-repeat="timeslot in timeslots | filter:{reserved:false, id:storedOrder.timeslotId.id}:true | orderBy : ['date','time']">
+          <img style="float:right;" ng-src="{{ timeslot.linkedCar.image }}" class="img-responsive" />
+          <h3>Available on {{timeslot.date}} at {{timeslot.time}}</h3>
+            <p>Contact: {{ timeslot.contactEmail }}<br />Location: {{ timeslot.location }}<br />Car type: {{ timeslot.linkedCar.brand }} {{ timeslot.linkedCar.type }}</p>
+            <p>{{ timeslot.linkedCar.description }}</p>  
+            <button type="button" class="btn btn-success" ng-click="bookTimeslot()">Book this car</button>            
+        </div>                
+      </div>
+    </div>
+  </div>
+</body>
+</html>

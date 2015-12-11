@@ -1,0 +1,52 @@
+<html>
+
+<head>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+  <script>
+  angular.module('app', []);
+  angular.module('app').controller('AlertController', function($scope, DataFactory) {
+    $scope.data = DataFactory;
+    $scope.alertAddTask = function(data) {
+      $scope.$broadcast('alertAddTask', data);
+    };
+    $scope.$on('alertAddTask', function(event, data) {
+      $scope.data = data;
+    });
+  });
+
+  angular.module('app').factory('DataFactory', function($http, $timeout) {
+    var obj = {};
+    obj.tasks = [];
+    obj.addTask = function(task){
+      obj.tasks.push(task);
+    };    
+    return obj;
+  });
+  </script>
+</head>
+
+<body ng-app="app">
+  <div class="container well">
+    <p>$rootScope</p>    
+    <div class="row">
+      <div class="col-xs-12 well" ng-controller="AlertController">
+        <input type="text" ng-model="taskvalue" class="form-control" />
+        <button ng-click="data.addTask({value: taskvalue, id: 1})"> Dodaj</button>
+        <p ng-repeat="task in data.tasks track by $index">
+          {{ task.value }} with id {{ task.id }}
+        </p>
+        <pre>{{data.alertAddTask()}}</pre>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

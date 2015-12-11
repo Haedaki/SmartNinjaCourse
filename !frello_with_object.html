@@ -1,0 +1,56 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script>
+
+angular.module('app', []);
+angular.module('app')
+  .controller('FrelloController', function($scope){
+
+    $scope.add = function(task){
+      if(!checkDuplicate(task))
+          $scope.tasks.push(new Task(task));
+          $scope.task = "";
+      }
+    }
+
+    $scope.remove = function(i){
+      $scope.tasks.splice(i, 1);
+    }
+
+    function checkDuplicate(task){
+      for(var i = 0; i < $scope.tasks.length; i++){
+        if($scope.tasks[i].task == task){
+          return true
+        }
+      }
+      return false;
+    }
+
+});
+
+</script>
+</head>
+<body ng-app="app">
+<div ng-controller="FrelloController" class="container well" ng-init="tasks = []">
+  <h1>Frello</h1>
+  <input type="text" ng-minlength="3" required ng-model="task" class="form-control" /><br>
+  <button class="btn btn-primary" ng-click="add(task)">Add task</button><br><br>
+    <div 
+      ng-repeat="task in tasks track by $index" 
+      ng-class="{ 'bg-info': !taskdone[$index], 
+                 'bg-success': taskdone[$index] }" 
+                 style="padding:15px; margin-bottom:20px;"
+    >
+      <p>
+        <label style="margin: 0 10px -3px 0;"><input style=" background:#ffffff;" type="checkbox" ng-model="taskdone[$index]" class="close" /></label>
+        {{ task.task }} 
+        <button type="button" class="close" aria-label="Close" ng-click="remove($index)"><span aria-hidden="true">&times;</span></button>
+      </p>
+  </div>
+</div>
+</body>
+</html>
