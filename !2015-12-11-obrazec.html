@@ -1,0 +1,45 @@
+<html>
+<head>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script>
+    angular.module('app', []);
+    angular.module('app').directive('blogPost', function(){  
+
+    return {
+      scope: {
+        blogtitle: '='
+      },
+      restrict: 'EA',
+      template: '<div ng-class="!textvalid ? \'well alert-success\' : \'well alert-danger\'"><h1>{{ blogtitle }}</h1></div>',
+      controller: function($scope){ 
+        $scope.blogtitle = '';      
+        $scope.$watch('blogtitle', function(){
+          if($scope.blogtitle.length < 10){
+            console.log('nooooo');
+            $scope.textvalid = false;
+          } else {
+            console.log('yeeees');
+            $scope.textvalid = true;
+          }
+        });
+      }
+    }
+    });
+  </script>
+</head>
+<body ng-app="app">
+      <div class="container well">
+        <div class="row">
+          <input name="title" ng-model="title" class="form-control" type="text" placeholder="Title" ><br />
+          <!-- <textarea name="blog" ng-model="blog" class="form-control" placeholder="Start writing ..."></textarea><br /> -->
+    
+
+            <blog-post blogtitle="title"></blog-post>
+            <!-- <p>{{ blog }}</p> -->
+        </div>
+      </div>
+  
+  </body>
+</html>
