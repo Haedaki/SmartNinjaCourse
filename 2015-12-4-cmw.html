@@ -37,7 +37,15 @@ angular.module('app')
     .then(function(response){
       alert('Thank you for booking!');
     }, function(response){
-      alert('Something went wrong:' + response.message);
+      var errors = response.data.errors;
+      var i = 0;
+      var printErrors = '';
+      while(errors[i]){
+        printErrors += errors[i].message+' ';
+        i++;
+      }
+      console.log(printErrors);      
+      alert('Something went wrong: ' + printErrors);
     });
   }; 
 
@@ -50,9 +58,11 @@ angular.module('app')
     <div class="row">
       <div class="col-xs-12 well">  
         <form name="order" novalidate>
-        <select 
+          Choose a timeslot:<br>
+        <select           
           name="dateTime" 
           class="form-control" 
+          ng-required="true"
           ng-options="times.date+' at '+times.time for times in timeslots | filter:{reserved:false} | orderBy : ['date','time'] track by times.id" 
           ng-model="storedOrder.timeslotId"></select> <br> 
         <input 
@@ -72,7 +82,7 @@ angular.module('app')
           <h3>Available on {{timeslot.date}} at {{timeslot.time}}</h3>
             <p>Contact: {{ timeslot.contactEmail }}<br />Location: {{ timeslot.location }}<br />Car type: {{ timeslot.linkedCar.brand }} {{ timeslot.linkedCar.type }}</p>
             <p>{{ timeslot.linkedCar.description }}</p>  
-            <button type="button" class="btn btn-success" ng-click="bookTimeslot()">Book this car</button>            
+            <button type="button" class="btn btn-success" ng-click="bookTimeslot()">Book this car</button>
         </div>                
       </div>
     </div>
